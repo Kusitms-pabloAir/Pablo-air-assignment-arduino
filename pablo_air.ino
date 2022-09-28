@@ -31,44 +31,26 @@ void loop() {
     Serial.write(value);
     if (value == '1'){
       digitalWrite(SOL_SENSOR, HIGH);
-
-      while(1){
-        int dist = sonar.ping_cm();
-        if (dist <= 5 && dist != 0){
-          lcd.setCursor(3, 0);
-          lcd.print("Delivered!");
-          delay(1000);
-          lcd.clear();
-        } 
-        else {
-          lcd.setCursor(6, 0);
-          lcd.print("Done!");
-          delay(3000);
-          lcd.clear();
-          lcd.setCursor(1, 0);
-          lcd.print("Not Delivered");
-          digitalWrite(SOL_SENSOR, LOW);
-          break;
-        }
-      }
+      lcd.setCursor(3, 0);
+      lcd.print("Delivered!");
+      delay(3000);
+      lcd.clear();
+      lcd.setCursor(3, 0);
+      lcd.print("Waiting...");
+      delay(10000);
+      lcd.clear();
+      lcd.setCursor(1, 0);
+      lcd.print("Not Delivered");
+      digitalWrite(SOL_SENSOR, LOW);
     }
-    
   }
 
   if (Serial.available()){
     bluetooth.write(Serial.read());
   }
 
-  int dist = sonar.ping_cm();
-
-  if (dist <= 25 && dist != 0) {
-    lcd.setCursor(3, 0);
-    lcd.print("Delivered!");
-  }
-  else {
-    lcd.setCursor(1, 0);
-    lcd.print("Not Delivered");
-  }
+  lcd.setCursor(1, 0);
+  lcd.print("Not Delivered");
   
   delay(300);
   lcd.clear();
